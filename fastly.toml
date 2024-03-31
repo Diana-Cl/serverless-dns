@@ -1,39 +1,27 @@
 # This file describes a Fastly Compute@Edge package. To learn more visit:
 # https://developer.fastly.com/reference/fastly-toml/
 
-authors = [""]
-description = "Serverless DNS deploys to Fastly Compute@Edge"
-language = "javascript"
-manifest_version = 2
-name = "serverless-dns"
+authors = ["pdelolmo@fastly.com", "kailan@enviark.com"]
+description = "Weather dashboard at the edge"
+language = "rust"
+manifest_version = 3
+name = "weather-release"
 service_id = ""
-
-[local_server]
-
-  [local_server.backends]
-
-  [local_server.dictionaries]
-
-    [local_server.dictionaries.env]
-      format = "inline-toml"
-
-      [local_server.dictionaries.env.contents]
-        env = "development"
-        CLOUD_PLATFORM = "fastly"
-
-[scripts]
-  build = "npm run build:fastly"
 
 [setup]
 
-  [setup.dictionaries]
+  [setup.backends]
 
-    [setup.dictionaries.env]
+    [setup.backends."api.openweathermap.org"]
+      address = "api.openweathermap.org"
+      description = "OpenWeatherMap API Server"
+      port = 443
 
-      [setup.dictionaries.env.items]
+  [setup.config_stores]
 
-        [setup.dictionaries.env.items.env]
-          value = "production"
-        [setup.dictionaries.env.items.CLOUD_PLATFORM]
-          value = "fastly"
+    [setup.config_stores.weather_auth]
 
+      [setup.config_stores.weather_auth.items]
+
+        [setup.config_stores.weather_auth.items.key]
+          description = "API token for openweathermap.org"
