@@ -2,7 +2,7 @@ const webpack = require("webpack");
 
 module.exports = {
   entry: "./src/server-node.js",
-  target: ["node", "es2022"],
+  target: ["node22", "es2022"],
   mode: "production",
   // enable devtool in development
   // devtool: 'eval-cheap-module-source-map',
@@ -16,6 +16,12 @@ module.exports = {
       maxChunks: 1,
     }),
   ],
+
+  /* externalsType: 'module',
+  externals: {
+    '@riaskov/mmap-io': '@riaskov/mmap-io',
+  },*/
+  externals: /@riaskov/,
 
   optimization: {
     usedExports: true,
@@ -47,7 +53,8 @@ module.exports = {
     module: true,
   },
 
-  /* or, cjs: stackoverflow.com/a/68916455
+  // or, cjs: stackoverflow.com/a/68916455
+  /*
   output: {
     filename: "fly.cjs",
     clean: true, // empty dist before output
